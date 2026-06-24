@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14161A">
+<title>QUALIDADE V1 · Apresentações</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+<style>
+:root{
+  --bg:#14161A;--panel:#1B1E24;--panel-2:#22262E;--panel-3:#272C35;--line:#2C313B;--line-soft:#22262E;
+  --text:#E9E7E2;--text-dim:#9AA0AB;--text-faint:#6B7280;
+  --brass:#C9952E;--brass-bright:#E3B45A;--brass-soft:rgba(201,149,46,.12);--brass-line:rgba(201,149,46,.35);
+  --danger:#E5645B;--danger-soft:rgba(229,100,91,.12);
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:"Inter",system-ui,sans-serif;font-size:14.5px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,input,textarea,select{font-family:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:6px}
+.brand{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:.02em}
+*::-webkit-scrollbar{width:9px;height:9px}*::-webkit-scrollbar-thumb{background:var(--line);border-radius:20px;border:2px solid transparent;background-clip:padding-box}
+
+.app{display:flex;flex-direction:column;height:100dvh}
+
+/* topo */
+.top{height:54px;flex:0 0 54px;display:flex;align-items:center;gap:11px;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(20,22,26,.7);backdrop-filter:blur(8px)}
+.mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(140deg,var(--brass-bright),var(--brass));position:relative;flex:0 0 26px}
+.mark::after{content:"";position:absolute;inset:7px;border:2px solid #14161A;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg);border-radius:3px}
+.top .ttl{font-size:14.5px}.top .ttl b{color:var(--brass-bright)}
+.top .ttl span{display:block;font-size:10px;letter-spacing:.16em;color:var(--text-faint);text-transform:uppercase;margin-top:2px}
+.top .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+.btn{padding:8px 13px;border-radius:var(--r-sm);font-size:13px;border:1px solid var(--line);background:var(--panel-2);color:var(--text);display:inline-flex;align-items:center;gap:7px;transition:.15s}
+.btn:hover{border-color:var(--brass-line);background:var(--panel-3)}
+.btn svg{width:15px;height:15px}
+.btn.primary{background:var(--brass);color:#14161A;border-color:var(--brass);font-weight:600}
+.btn.primary:hover{background:var(--brass-bright)}
+.btn:disabled{opacity:.4;cursor:default}
+.menu{position:relative}
+.menu-pop{position:absolute;right:0;top:calc(100% + 6px);background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:6px;min-width:180px;box-shadow:0 12px 34px rgba(0,0,0,.45);z-index:30;display:none}
+.menu.open .menu-pop{display:block}
+.menu-pop button{display:flex;width:100%;gap:9px;align-items:center;padding:9px 10px;border-radius:7px;font-size:13px;color:var(--text-dim)}
+.menu-pop button:hover{background:var(--panel-2);color:var(--text)}
+
+/* corpo */
+.body{flex:1;display:flex;min-height:0}
+
+/* tira de slides */
+.rail{width:188px;flex:0 0 188px;border-right:1px solid var(--line);background:var(--panel);overflow-y:auto;padding:12px 10px}
+.rail .add-slide{width:100%;padding:9px;border:1px dashed var(--line);border-radius:var(--r-sm);color:var(--text-dim);font-size:12.5px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:6px}
+.rail .add-slide:hover{border-color:var(--brass-line);color:var(--text)}
+.thumb{border:1px solid var(--line);border-radius:9px;background:var(--panel-2);padding:10px;margin-bottom:9px;cursor:pointer;position:relative;transition:.15s;aspect-ratio:16/9;overflow:hidden}
+.thumb:hover{border-color:var(--brass-line)}
+.thumb.active{border-color:var(--brass);box-shadow:0 0 0 1px var(--brass)}
+.thumb .n{position:absolute;top:6px;left:8px;font-size:10px;font-family:"Space Grotesk";color:var(--text-faint)}
+.thumb .t{font-size:11px;font-weight:600;margin-top:12px;line-height:1.25;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.thumb .b{font-size:9px;color:var(--text-faint);margin-top:4px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+/* palco */
+.stage-wrap{flex:1;min-width:0;display:flex;flex-direction:column;background:radial-gradient(circle at 50% 0%,#191c22,#121419)}
+.stage-scroll{flex:1;overflow:auto;display:grid;place-items:center;padding:26px}
+.slide{
+  width:min(100%,860px);aspect-ratio:16/9;border-radius:14px;overflow:hidden;position:relative;
+  box-shadow:0 20px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;
+}
+.slide .pad{padding:48px 54px;display:flex;flex-direction:column;height:100%;position:relative;z-index:2}
+.slide .accent{position:absolute;left:0;top:0;bottom:0;width:8px;z-index:3}
+.slide h2{font-family:"Space Grotesk";font-weight:600;font-size:30px;line-height:1.18;outline:none}
+.slide .rule{height:2px;width:54px;margin:16px 0 20px;border-radius:2px}
+.slide ul{list-style:none;display:flex;flex-direction:column;gap:13px;flex:1}
+.slide li{font-size:18px;line-height:1.45;display:flex;gap:12px;outline:none}
+.slide li::before{content:"";width:7px;height:7px;border-radius:50%;margin-top:9px;flex:0 0 7px}
+.slide .si{position:absolute;right:0;bottom:0;width:38%;height:100%;object-fit:cover;opacity:.9;z-index:1}
+.slide.has-img .pad{width:64%}
+.slide .pg{position:absolute;right:22px;bottom:16px;font-size:12px;font-family:"Space Grotesk";z-index:4;opacity:.6}
+
+/* nav + acoes */
+.stage-bar{height:56px;flex:0 0 56px;border-top:1px solid var(--line);display:flex;align-items:center;gap:8px;padding:0 16px;background:var(--panel)}
+.nav-btn{width:34px;height:34px;border-radius:8px;display:grid;place-items:center;border:1px solid var(--line);color:var(--text-dim);background:var(--panel-2)}
+.nav-btn:hover{border-color:var(--brass-line);color:var(--text)}
+.nav-btn svg{width:16px;height:16px}
+.pos{font-size:13px;color:var(--text-faint);font-family:"Space Grotesk";min-width:54px;text-align:center}
+.stage-bar .sp{flex:1}
+.act{padding:8px 11px;border-radius:8px;font-size:12.5px;border:1px solid var(--line);background:var(--panel-2);color:var(--text-dim);display:inline-flex;gap:6px;align-items:center}
+.act:hover{border-color:var(--brass-line);color:var(--text)}
+.act svg{width:14px;height:14px}
+.act.ai{color:var(--brass-bright);border-color:var(--brass-line)}
+
+/* overlay gerar */
+.overlay{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:22px;background:rgba(10,11,13,.8);backdrop-filter:blur(6px)}
+.overlay[hidden]{display:none}
+.card{width:100%;max-width:480px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden}
+.card-head{padding:22px 22px 14px;border-bottom:1px solid var(--line-soft)}
+.card-head h2{font-family:"Space Grotesk";font-size:18px;font-weight:600}
+.card-head p{color:var(--text-dim);font-size:12.5px;margin-top:5px}
+.card-body{padding:18px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:var(--text-dim);margin-bottom:6px}
+.field textarea,.field input,.field select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:11px;font-size:13.5px;outline:none;resize:vertical}
+.field textarea:focus,.field input:focus,.field select:focus{border-color:var(--brass-line)}
+.row{display:flex;gap:10px}.row .field{flex:1}
+.card-foot{padding:0 18px 20px;display:flex;gap:9px}
+.card-foot .btn{flex:1;justify-content:center;padding:12px}
+.busy{display:none;flex-direction:column;align-items:center;gap:14px;padding:34px 22px;text-align:center}
+.busy.on{display:flex}
+.ring{width:30px;height:30px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--brass);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.busy p{color:var(--text-dim);font-size:13px}
+.err{color:var(--danger);font-size:12.5px;margin-top:4px;display:none}
+.err.on{display:block}
+
+/* prompt IA por slide */
+.ai-pop{position:fixed;z-index:70;background:var(--panel);border:1px solid var(--brass-line);border-radius:var(--r-md);padding:12px;width:320px;box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.ai-pop[hidden]{display:none}
+.ai-pop .lbl{font-size:11px;color:var(--text-faint);margin-bottom:8px}
+.ai-pop textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:9px;font-size:13px;outline:none;resize:none;min-height:60px}
+.ai-pop .chips{display:flex;flex-wrap:wrap;gap:6px;margin:9px 0}
+.ai-pop .chips button{font-size:11px;padding:5px 9px;border:1px solid var(--line);border-radius:20px;color:var(--text-dim)}
+.ai-pop .chips button:hover{border-color:var(--brass-line);color:var(--text)}
+.ai-pop .go{width:100%;margin-top:4px;padding:9px;border-radius:8px;background:var(--brass);color:#14161A;font-weight:600;font-size:13px}
+.ai-pop .go:disabled{opacity:.5}
+
+.toast{position:fixed;bottom:74px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--panel-3);border:1px solid var(--line);border-radius:10px;padding:10px 15px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:80}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px}
+.empty .inner{max-width:380px}
+.empty .big{width:52px;height:52px;border-radius:14px;background:linear-gradient(140deg,var(--brass-bright),var(--brass));margin:0 auto 14px;position:relative}
+.empty .big::after{content:"";position:absolute;inset:15px;border:3px solid #14161A;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg);border-radius:4px}
+.empty h1{font-family:"Space Grotesk";font-size:21px;font-weight:600;margin-bottom:8px}
+.empty p{color:var(--text-dim);font-size:13.5px;margin-bottom:18px}
+
+@media (max-width:760px){
+  .rail{position:absolute;left:0;top:54px;bottom:0;z-index:20;transform:translateX(-100%);transition:transform .25s}
+  .app.rail-open .rail{transform:none;box-shadow:8px 0 30px rgba(0,0,0,.5)}
+  .slide .pad{padding:28px 30px}.slide h2{font-size:22px}.slide li{font-size:14px}
+  .hide-sm{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* impressao / PDF */
+@media print{
+  body{overflow:visible}
+  .top,.rail,.stage-bar{display:none!important}
+  .stage-wrap,.body,.app{display:block;height:auto;background:#fff}
+  .stage-scroll{display:block;padding:0}
+  .slide{width:100%;box-shadow:none;border-radius:0;page-break-after:always;margin:0}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="top">
+    <button class="nav-btn hide-sm" id="railToggle" style="display:none" aria-label="Slides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    <div class="mark"></div>
+    <div class="ttl brand">QUALIDADE <b>V1</b><span>Apresentações</span></div>
+    <div class="right">
+      <button class="btn" id="newBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="hide-sm">Nova</span></button>
+      <div class="menu" id="exportMenu">
+        <button class="btn primary" id="exportBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span class="hide-sm">Exportar</span></button>
+        <div class="menu-pop">
+          <button data-exp="pptx"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 20h10"/></svg>PowerPoint (.pptx)</button>
+          <button data-exp="pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg>PDF / Imprimir</button>
+          <button data-exp="html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 9l-3 3 3 3M16 9l3 3-3 3"/></svg>Página HTML</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="body">
+    <aside class="rail" id="rail"></aside>
+
+    <section class="stage-wrap">
+      <div class="stage-scroll" id="stageScroll">
+        <!-- slide ou empty -->
+      </div>
+      <div class="stage-bar" id="stageBar" style="display:none">
+        <button class="nav-btn" id="prev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <span class="pos" id="pos">1 / 1</span>
+        <button class="nav-btn" id="next" aria-label="Próximo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        <div class="sp"></div>
+        <button class="act ai" id="aiEdit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/></svg><span class="hide-sm">Editar com IA</span></button>
+        <button class="act" id="addImg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><span class="hide-sm">Imagem</span></button>
+        <button class="act" id="dupSlide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M3 16V5a2 2 0 0 1 2-2h11"/></svg></button>
+        <button class="act" id="delSlide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- gerar -->
+<div class="overlay" id="genOverlay" hidden>
+  <div class="card">
+    <div class="card-head"><h2>Nova apresentação</h2><p>Descreva o tema. A IA monta o deck e você edita tudo depois.</p></div>
+    <div class="card-body" id="genForm">
+      <div class="field">
+        <label>Tema / assunto</label>
+        <textarea id="gTopic" rows="3" placeholder="Ex.: Fundamentos de hidráulica em escavadeiras, para estudantes de mecânica"></textarea>
+      </div>
+      <div class="row">
+        <div class="field"><label>Nº de slides</label><input id="gCount" type="number" min="3" max="20" value="8"></div>
+        <div class="field"><label>Tom</label>
+          <select id="gTone"><option>Didático</option><option>Profissional</option><option>Persuasivo</option><option>Técnico</option><option>Descontraído</option></select>
+        </div>
+      </div>
+      <div class="field"><label>Tema visual</label>
+        <select id="gTheme"><option value="latao">Latão (escuro)</option><option value="claro">Claro minimalista</option><option value="profundo">Azul profundo</option></select>
+      </div>
+      <div class="err" id="genErr"></div>
+    </div>
+    <div class="busy" id="genBusy"><div class="ring"></div><p>Montando sua apresentação…</p></div>
+    <div class="card-foot" id="genFoot">
+      <button class="btn" id="genCancel" style="flex:.6">Cancelar</button>
+      <button class="btn primary" id="genGo">Gerar deck</button>
+    </div>
+  </div>
+</div>
+
+<!-- prompt IA por slide -->
+<div class="ai-pop" id="aiPop" hidden>
+  <div class="lbl">Editar <b id="aiPopN">slide</b> — muda só este, o resto fica intacto</div>
+  <textarea id="aiInstr" placeholder="Ex.: deixe mais curto e direto / adicione um exemplo prático / corrija o tom"></textarea>
+  <div class="chips" id="aiChips">
+    <button data-i="Deixe mais curto e direto">Encurtar</button>
+    <button data-i="Reescreva de forma mais clara e didática">Mais claro</button>
+    <button data-i="Adicione um exemplo prático real">+ Exemplo</button>
+    <button data-i="Deixe o tom mais profissional">Profissional</button>
+  </div>
+  <button class="go" id="aiGo">Aplicar só neste slide</button>
+</div>
+
+<!-- chaves (fallback se nao houver) -->
+<div class="overlay" id="keyOverlay" hidden>
+  <div class="card">
+    <div class="card-head"><h2>Conectar chave</h2><p>Cole sua chave OpenRouter pra gerar os slides. Fica salva só neste aparelho.</p></div>
+    <div class="card-body">
+      <div class="field"><label>OpenRouter</label><input id="kOR" type="password" placeholder="sk-or-v1-…"></div>
+      <div class="field"><label>Groq (opcional, fallback)</label><input id="kGQ" type="password" placeholder="gsk_…"></div>
+      <div class="err" id="keyErr"></div>
+    </div>
+    <div class="card-foot"><button class="btn primary" id="keySave" style="flex:1;justify-content:center">Salvar</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ chaves (mesmo store do app principal) ============ */
+const LS={k1:'iia_v7_openrouter',k2:'iia_v7_groq'};
+const getK1=()=>localStorage.getItem(LS.k1)||'';
+const getK2=()=>localStorage.getItem(LS.k2)||'';
+const $=s=>document.querySelector(s);
+const MODEL_MAIN=(()=>{try{return JSON.parse(localStorage.getItem('iia_v7_settings')||'{}').modelMain||'openai/gpt-4o-mini'}catch{return 'openai/gpt-4o-mini'}})();
+const MODEL_FB=(()=>{try{return JSON.parse(localStorage.getItem('iia_v7_settings')||'{}').modelFb||'llama-3.3-70b-versatile'}catch{return 'llama-3.3-70b-versatile'}})();
+
+/* ============ chamada LLM (JSON, OpenRouter -> Groq) ============ */
+async function askJSON(system,user){
+  const attempts=[
+    {url:'https://openrouter.ai/api/v1/chat/completions',key:getK1(),model:MODEL_MAIN,extra:{'HTTP-Referer':location.origin,'X-Title':'QUALIDADE V1'}},
+    {url:'https://api.groq.com/openai/v1/chat/completions',key:getK2(),model:MODEL_FB,extra:{}}
+  ];
+  let lastErr=null;
+  for(const a of attempts){
+    if(!a.key){lastErr=new Error('sem chave');continue;}
+    try{
+      const r=await fetch(a.url,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+a.key,...a.extra},
+        body:JSON.stringify({model:a.model,messages:[{role:'system',content:system},{role:'user',content:user}],temperature:.7})});
+      if(!r.ok){lastErr=new Error('HTTP '+r.status);continue;}
+      const j=await r.json();
+      let txt=j.choices?.[0]?.message?.content||'';
+      txt=txt.replace(/```json|```/g,'').trim();
+      const s=txt.indexOf('{'),e=txt.lastIndexOf('}');
+      if(s>=0&&e>=0) txt=txt.slice(s,e+1);
+      return JSON.parse(txt);
+    }catch(err){lastErr=err}
+  }
+  throw lastErr||new Error('falha');
+}
+
+/* ============ estado ============ */
+let deck=null;        // {titulo, theme, slides:[{titulo,topicos[],notas,img}]}
+let cur=0;
+const THEMES={
+  latao:{bg:'#171A1F',fg:'#E9E7E2',dim:'#9AA0AB',accent:'#C9952E',grad:'linear-gradient(150deg,#1B1E24,#15171B)'},
+  claro:{bg:'#F7F6F2',fg:'#1A1C20',dim:'#5B606B',accent:'#B07A1E',grad:'linear-gradient(150deg,#FFFFFF,#F1EFE9)'},
+  profundo:{bg:'#0E1B2A',fg:'#EAF0F6',dim:'#9DB0C2',accent:'#4FA3D1',grad:'linear-gradient(150deg,#11233A,#0C1622)'}
+};
+
+/* ============ geração ============ */
+$('#genGo').addEventListener('click',async()=>{
+  const topic=$('#gTopic').value.trim();
+  if(!topic){$('#gTopic').focus();return;}
+  if(!getK1()&&!getK2()){$('#keyOverlay').hidden=false;return;}
+  const n=Math.max(3,Math.min(20,+$('#gCount').value||8));
+  const tone=$('#gTone').value, theme=$('#gTheme').value;
+  $('#genForm').style.display='none';$('#genFoot').style.display='none';$('#genBusy').classList.add('on');$('#genErr').classList.remove('on');
+  try{
+    const sys=`Você cria apresentações de alta qualidade em português do Brasil. Responda APENAS com JSON válido, sem markdown, sem cercas de código, sem texto fora do JSON. Formato exato: {"titulo":"...","slides":[{"titulo":"...","topicos":["...","..."],"notas":"fala do apresentador"}]}. Cada slide deve ter de 2 a 5 tópicos curtos e densos (não frases longas). O primeiro slide é capa (título forte, 1-2 tópicos). Tom: ${tone}.`;
+    const usr=`Tema: ${topic}\nGere exatamente ${n} slides.`;
+    const data=await askJSON(sys,usr);
+    deck={titulo:data.titulo||topic,theme,slides:(data.slides||[]).map(s=>({titulo:s.titulo||'',topicos:Array.isArray(s.topicos)?s.topicos:[],notas:s.notas||'',img:null}))};
+    if(!deck.slides.length) throw new Error('vazio');
+    cur=0;closeGen();renderAll();toast('Deck gerado. Edite à vontade.');
+  }catch(e){
+    $('#genBusy').classList.remove('on');$('#genForm').style.display='';$('#genFoot').style.display='';
+    $('#genErr').textContent='Não consegui gerar ('+(e.message||'erro')+'). Confira a chave/modelo e tente de novo.';$('#genErr').classList.add('on');
+  }
+});
+function closeGen(){$('#genOverlay').hidden=true;$('#genBusy').classList.remove('on');$('#genForm').style.display='';$('#genFoot').style.display='';}
+$('#genCancel').addEventListener('click',closeGen);
+$('#newBtn').addEventListener('click',()=>{$('#genOverlay').hidden=false;setTimeout(()=>$('#gTopic').focus(),150)});
+
+/* ============ render ============ */
+function renderAll(){renderRail();renderStage();}
+function renderEmpty(){
+  $('#stageScroll').innerHTML=`<div class="empty"><div class="inner"><div class="big"></div><h1 class="brand">Apresentações QUALIDADE V1</h1><p>Descreva um tema e a IA monta o deck. Depois você edita cada slide — e cada ajuste por IA mexe só naquele slide.</p><button class="btn primary" id="emptyNew" style="margin:0 auto">Criar apresentação</button></div></div>`;
+  $('#emptyNew').addEventListener('click',()=>$('#newBtn').click());
+  $('#stageBar').style.display='none';$('#rail').innerHTML='';$('#railToggle').style.display='none';
+}
+function renderRail(){
+  const rail=$('#rail');rail.innerHTML='';
+  const add=document.createElement('button');add.className='add-slide';add.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Slide';
+  add.addEventListener('click',()=>{deck.slides.splice(cur+1,0,{titulo:'Novo slide',topicos:['Tópico'],notas:'',img:null});cur++;renderAll();});
+  rail.appendChild(add);
+  deck.slides.forEach((s,i)=>{
+    const d=document.createElement('div');d.className='thumb'+(i===cur?' active':'');
+    d.innerHTML=`<span class="n">${String(i+1).padStart(2,'0')}</span><div class="t">${esc(s.titulo)}</div><div class="b">${esc((s.topicos||[]).join(' · '))}</div>`;
+    d.addEventListener('click',()=>{cur=i;renderAll();$('#app').classList.remove('rail-open')});
+    rail.appendChild(d);
+  });
+}
+function renderStage(){
+  if(!deck){renderEmpty();return;}
+  $('#stageBar').style.display='';$('#railToggle').style.display='';
+  const s=deck.slides[cur],t=THEMES[deck.theme]||THEMES.latao;
+  const lis=(s.topicos||[]).map((tp,j)=>`<li data-j="${j}"><span style="background:${t.accent}"></span><span contenteditable class="edit" data-k="topico" data-j="${j}">${esc(tp)}</span></li>`).join('');
+  $('#stageScroll').innerHTML=`
+    <div class="slide ${s.img?'has-img':''}" style="background:${t.grad};color:${t.fg}">
+      <div class="accent" style="background:${t.accent}"></div>
+      ${s.img?`<img class="si" src="${s.img}" alt="">`:''}
+      <div class="pad">
+        <h2 contenteditable class="edit" data-k="titulo">${esc(s.titulo)}</h2>
+        <div class="rule" style="background:${t.accent}"></div>
+        <ul>${lis}</ul>
+      </div>
+      <div class="pg" style="color:${t.dim}">${cur+1}</div>
+    </div>`;
+  // edicao inline
+  $('#stageScroll').querySelectorAll('.edit').forEach(elm=>{
+    elm.addEventListener('blur',()=>{
+      const k=elm.dataset.k;
+      if(k==='titulo')s.titulo=elm.innerText.trim();
+      else if(k==='topico')s.topicos[+elm.dataset.j]=elm.innerText.trim();
+      renderRail();
+    });
+    elm.addEventListener('keydown',ev=>{if(k_enter(ev,elm))ev.preventDefault();});
+  });
+  $('#pos').textContent=`${cur+1} / ${deck.slides.length}`;
+}
+function k_enter(ev,elm){ if(ev.key==='Enter'&&elm.dataset.k==='titulo'){elm.blur();return true;} return false; }
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* ============ navegação + ações ============ */
+$('#prev').addEventListener('click',()=>{if(cur>0){cur--;renderAll();}});
+$('#next').addEventListener('click',()=>{if(cur<deck.slides.length-1){cur++;renderAll();}});
+document.addEventListener('keydown',e=>{if(!deck||e.target.isContentEditable)return;if(e.key==='ArrowLeft')$('#prev').click();if(e.key==='ArrowRight')$('#next').click();});
+$('#dupSlide').addEventListener('click',()=>{const c=JSON.parse(JSON.stringify(deck.slides[cur]));deck.slides.splice(cur+1,0,c);cur++;renderAll();});
+$('#delSlide').addEventListener('click',()=>{if(deck.slides.length<=1){toast('Precisa de pelo menos 1 slide.');return;}deck.slides.splice(cur,1);cur=Math.max(0,cur-1);renderAll();});
+$('#railToggle').addEventListener('click',()=>$('#app').classList.toggle('rail-open'));
+
+/* imagem por slide (Pollinations) */
+$('#addImg').addEventListener('click',async()=>{
+  const s=deck.slides[cur];
+  toast('Gerando imagem…');
+  const prompt=encodeURIComponent((s.titulo+' '+(s.topicos||[]).join(' ')).slice(0,400));
+  const url=`https://image.pollinations.ai/prompt/${prompt}?width=1024&height=1024&nologo=true&model=flux&seed=${Math.floor(Math.random()*1e9)}`;
+  const im=new Image();im.onload=()=>{s.img=url;renderStage();toast('Imagem adicionada.');};im.onerror=()=>toast('Falhou ao gerar imagem.');im.src=url;
+});
+
+/* ============ EDIÇÃO CIRÚRGICA POR IA (muda só o slide atual) ============ */
+const aiPop=$('#aiPop');
+$('#aiEdit').addEventListener('click',e=>{
+  const r=e.currentTarget.getBoundingClientRect();
+  aiPop.style.left=Math.max(12,Math.min(window.innerWidth-332,r.left-150))+'px';
+  aiPop.style.bottom=(window.innerHeight-r.top+8)+'px';aiPop.style.top='auto';
+  $('#aiPopN').textContent='slide '+(cur+1);$('#aiInstr').value='';aiPop.hidden=false;$('#aiInstr').focus();
+});
+$('#aiChips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{$('#aiInstr').value=b.dataset.i;$('#aiInstr').focus();}));
+document.addEventListener('click',e=>{if(!aiPop.hidden&&!aiPop.contains(e.target)&&e.target.id!=='aiEdit'&&!e.target.closest('#aiEdit'))aiPop.hidden=true;});
+$('#aiGo').addEventListener('click',async()=>{
+  const instr=$('#aiInstr').value.trim();if(!instr)return;
+  const idx=cur, s=deck.slides[idx];
+  $('#aiGo').disabled=true;$('#aiGo').textContent='Aplicando…';
+  try{
+    const sys=`Você edita UM slide de apresentação. Responda APENAS com JSON do slide modificado, sem markdown. Formato: {"titulo":"...","topicos":["..."],"notas":"..."}. Mantenha o assunto; aplique só a instrução pedida.`;
+    const usr=`Slide atual: ${JSON.stringify({titulo:s.titulo,topicos:s.topicos,notas:s.notas})}\nInstrução: ${instr}`;
+    const ns=await askJSON(sys,usr);
+    // substitui SOMENTE este slide
+    deck.slides[idx]={...s,titulo:ns.titulo??s.titulo,topicos:Array.isArray(ns.topicos)?ns.topicos:s.topicos,notas:ns.notas??s.notas};
+    aiPop.hidden=true;if(cur===idx)renderAll();else renderRail();
+    toast('Slide '+(idx+1)+' atualizado. Resto intacto.');
+  }catch(err){toast('Erro: '+(err.message||'falhou'));}
+  finally{$('#aiGo').disabled=false;$('#aiGo').textContent='Aplicar só neste slide';}
+});
+
+/* ============ exportações ============ */
+const expMenu=$('#exportMenu');
+$('#exportBtn').addEventListener('click',e=>{if(!deck){toast('Crie um deck primeiro.');return;}e.stopPropagation();expMenu.classList.toggle('open');});
+document.addEventListener('click',e=>{if(!expMenu.contains(e.target))expMenu.classList.remove('open');});
+expMenu.querySelectorAll('[data-exp]').forEach(b=>b.addEventListener('click',()=>{expMenu.classList.remove('open');doExport(b.dataset.exp);}));
+
+function doExport(kind){
+  if(kind==='pdf'){window.print();return;}
+  if(kind==='pptx')return exportPPTX();
+  if(kind==='html')return exportHTML();
+}
+function exportPPTX(){
+  if(typeof PptxGenJS==='undefined'){toast('Biblioteca PPTX não carregou (precisa de internet).');return;}
+  const t=THEMES[deck.theme]||THEMES.latao;
+  const hex=c=>c.replace('#','');
+  const pptx=new PptxGenJS();pptx.defineLayout({name:'W',width:13.33,height:7.5});pptx.layout='W';
+  deck.slides.forEach((s,i)=>{
+    const sl=pptx.addSlide();sl.background={color:hex(t.bg)};
+    sl.addShape(pptx.ShapeType.rect,{x:0,y:0,w:0.18,h:7.5,fill:{color:hex(t.accent)}});
+    sl.addText(s.titulo||'',{x:0.7,y:0.55,w:12,h:1.2,fontFace:'Arial',fontSize:30,bold:true,color:hex(t.fg)});
+    sl.addShape(pptx.ShapeType.rect,{x:0.72,y:1.75,w:1.1,h:0.05,fill:{color:hex(t.accent)}});
+    const bullets=(s.topicos||[]).map(tp=>({text:tp,options:{bullet:{code:'2022'},color:hex(t.fg),fontSize:18,paraSpaceAfter:10}}));
+    if(bullets.length)sl.addText(bullets,{x:0.8,y:2.1,w:11.5,h:4.6,fontFace:'Arial',valign:'top'});
+    if(s.notas)sl.addNotes(s.notas);
+    sl.addText(String(i+1),{x:12.4,y:6.9,w:0.6,h:0.4,fontSize:12,color:hex(t.dim),align:'right'});
+  });
+  pptx.writeFile({fileName:(deck.titulo||'apresentacao').replace(/[^\w\s-]/g,'').slice(0,50)+'.pptx'}).then(()=>toast('PPTX exportado.'));
+}
+function exportHTML(){
+  const t=THEMES[deck.theme]||THEMES.latao;
+  const slidesHTML=deck.slides.map((s,i)=>`<section class="s"><div class="ac"></div><div class="pd"><h2>${esc(s.titulo)}</h2><div class="rl"></div><ul>${(s.topicos||[]).map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div><span class="pg">${i+1}</span></section>`).join('');
+  const doc=`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(deck.titulo)}</title>
+<style>*{margin:0;box-sizing:border-box;font-family:Inter,Segoe UI,sans-serif}body{background:#000;overflow:hidden}
+.s{position:fixed;inset:0;width:100vw;height:100vh;display:none;flex-direction:column;justify-content:center;background:${t.bg};color:${t.fg};padding:6vh 8vw}
+.s.on{display:flex}.ac{position:absolute;left:0;top:0;bottom:0;width:1vw;background:${t.accent}}
+h2{font-size:5vw;font-weight:700;line-height:1.15}.rl{width:6vw;height:.4vh;background:${t.accent};margin:2.4vh 0 3vh}
+ul{list-style:none;display:flex;flex-direction:column;gap:2vh}li{font-size:2.6vw;display:flex;gap:1.2vw}li::before{content:"";width:1vh;height:1vh;border-radius:50%;background:${t.accent};margin-top:1.6vh;flex:0 0 auto}
+.pg{position:absolute;right:3vw;bottom:3vh;color:${t.dim};font-size:2vw}.nav{position:fixed;bottom:3vh;left:50%;transform:translateX(-50%);display:flex;gap:1vw;z-index:5}
+.nav button{background:rgba(255,255,255,.1);color:${t.fg};border:none;padding:1.4vh 2vw;border-radius:8px;font-size:1.8vw;cursor:pointer}</style></head>
+<body>${slidesHTML}<div class="nav"><button onclick="go(-1)">‹</button><button onclick="go(1)">›</button></div>
+<script>let c=0,S=document.querySelectorAll('.s');function sh(){S.forEach((s,i)=>s.classList.toggle('on',i===c))}function go(d){c=Math.max(0,Math.min(S.length-1,c+d));sh()}document.onkeydown=e=>{if(e.key==='ArrowRight')go(1);if(e.key==='ArrowLeft')go(-1)};sh();<\/script></body></html>`;
+  const blob=new Blob([doc],{type:'text/html'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=(deck.titulo||'apresentacao').replace(/[^\w\s-]/g,'').slice(0,50)+'.html';a.click();toast('HTML exportado.');
+}
+
+/* ============ chaves fallback ============ */
+$('#keySave').addEventListener('click',()=>{
+  const a=$('#kOR').value.trim(),b=$('#kGQ').value.trim();
+  if(!a&&!b){$('#keyErr').textContent='Cole pelo menos a chave OpenRouter.';$('#keyErr').classList.add('on');return;}
+  if(a)localStorage.setItem(LS.k1,a);if(b)localStorage.setItem(LS.k2,b);
+  $('#keyOverlay').hidden=true;toast('Chave salva.');$('#genGo').click();
+});
+
+/* ============ toast ============ */
+let tt;function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),2400);}
+
+/* ============ start ============ */
+renderEmpty();
+if(!getK1()&&!getK2()){/* deixa abrir; pede chave ao gerar */}
+</script>
+</body>
+</html>

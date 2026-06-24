@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14161A">
+<title>QUALIDADE V1 · Imagens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#14161A;--panel:#1B1E24;--panel-2:#22262E;--panel-3:#272C35;--line:#2C313B;--line-soft:#22262E;
+  --text:#E9E7E2;--text-dim:#9AA0AB;--text-faint:#6B7280;
+  --brass:#C9952E;--brass-bright:#E3B45A;--brass-soft:rgba(201,149,46,.12);--brass-line:rgba(201,149,46,.35);
+  --danger:#E5645B;--r-sm:8px;--r-md:12px;--r-lg:16px;--ease:cubic-bezier(.2,.7,.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--text);font-family:"Inter",system-ui,sans-serif;font-size:14.5px;line-height:1.5;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;height:100dvh;overflow:hidden}
+button,input,textarea,select{font-family:inherit;color:inherit}
+button{cursor:pointer;border:none;background:none}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:6px}
+.brand{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:.02em}
+*::-webkit-scrollbar{width:9px;height:9px}*::-webkit-scrollbar-thumb{background:var(--line);border-radius:20px;border:2px solid transparent;background-clip:padding-box}
+
+/* topo */
+.top{height:54px;flex:0 0 54px;display:flex;align-items:center;gap:11px;padding:0 16px;border-bottom:1px solid var(--line);background:rgba(20,22,26,.7);backdrop-filter:blur(8px);z-index:5}
+.mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(140deg,var(--brass-bright),var(--brass));position:relative;flex:0 0 26px}
+.mark::after{content:"";position:absolute;inset:7px;border:2px solid #14161A;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg);border-radius:3px}
+.top .ttl{font-size:14.5px}.top .ttl b{color:var(--brass-bright)}
+.top .ttl span{display:block;font-size:10px;letter-spacing:.16em;color:var(--text-faint);text-transform:uppercase;margin-top:2px}
+.top .right{margin-left:auto;display:flex;gap:8px}
+.gbtn{padding:8px 12px;border-radius:var(--r-sm);font-size:12.5px;border:1px solid var(--line);background:var(--panel-2);color:var(--text-dim);display:inline-flex;gap:6px;align-items:center}
+.gbtn:hover{border-color:var(--brass-line);color:var(--text)}.gbtn svg{width:14px;height:14px}
+
+/* feed */
+.feed-wrap{flex:1;overflow-y:auto;padding:22px 18px 30px}
+.feed{max-width:1100px;margin:0 auto;columns:3 280px;column-gap:14px}
+.card{break-inside:avoid;margin-bottom:14px;border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;background:var(--panel);position:relative}
+.card img{display:block;width:100%;height:auto;cursor:zoom-in;background:var(--panel-2)}
+.card .ph{aspect-ratio:1/1;display:grid;place-items:center;color:var(--text-faint);font-size:12px;gap:12px;text-align:center;padding:20px}
+.card .ph .ring{width:26px;height:26px;border-radius:50%;border:2.5px solid var(--line);border-top-color:var(--brass);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.card .meta{padding:9px 11px;border-top:1px solid var(--line-soft)}
+.card .pr{font-size:11.5px;color:var(--text-dim);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4}
+.card .tags{font-size:10px;color:var(--text-faint);margin-top:5px;font-family:"Space Grotesk"}
+.card .bar{display:flex;gap:4px;padding:6px;border-top:1px solid var(--line-soft);opacity:.85}
+.card .bar button{flex:1;padding:7px;border-radius:6px;color:var(--text-dim);display:grid;place-items:center}
+.card .bar button:hover{background:var(--panel-2);color:var(--text)}
+.card .bar button.del:hover{color:var(--danger)}
+.card .bar svg{width:15px;height:15px}
+
+.empty{height:100%;display:grid;place-items:center;text-align:center;padding:22px}
+.empty .inner{max-width:400px}
+.empty .big{width:52px;height:52px;border-radius:14px;background:linear-gradient(140deg,var(--brass-bright),var(--brass));margin:0 auto 14px;position:relative}
+.empty .big::after{content:"";position:absolute;inset:14px;border:2.5px solid #14161A;border-radius:3px}
+.empty h1{font-family:"Space Grotesk";font-size:21px;font-weight:600;margin-bottom:8px}
+.empty p{color:var(--text-dim);font-size:13.5px}
+
+/* composer */
+.dock{flex:0 0 auto;border-top:1px solid var(--line);background:var(--panel);padding:12px 16px 14px}
+.dock-inner{max-width:1100px;margin:0 auto}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.ctrl{display:flex;align-items:center;gap:6px;background:var(--panel-2);border:1px solid var(--line);border-radius:20px;padding:5px 6px 5px 12px}
+.ctrl label{font-size:11px;color:var(--text-faint)}
+.ctrl select{background:none;border:none;font-size:12.5px;color:var(--text);outline:none;cursor:pointer;padding:3px 4px}
+.ctrl select option{background:var(--panel)}
+.toggle{display:flex;align-items:center;gap:8px;background:var(--panel-2);border:1px solid var(--line);border-radius:20px;padding:7px 13px;font-size:12.5px;color:var(--text-dim);cursor:pointer}
+.toggle.on{border-color:var(--brass-line);color:var(--text);background:var(--brass-soft)}
+.toggle .sw{width:30px;height:17px;border-radius:20px;background:var(--line);position:relative;transition:.18s;flex:0 0 30px}
+.toggle.on .sw{background:var(--brass)}
+.toggle .sw::after{content:"";position:absolute;width:13px;height:13px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.18s}
+.toggle.on .sw::after{left:15px}
+.input-row{display:flex;align-items:flex-end;gap:10px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-lg);padding:8px 8px 8px 16px;transition:border-color .15s}
+.input-row:focus-within{border-color:var(--brass-line)}
+.input-row textarea{flex:1;background:none;border:none;resize:none;outline:none;font-size:15px;line-height:1.5;max-height:140px;padding:8px 0;color:var(--text)}
+.input-row textarea::placeholder{color:var(--text-faint)}
+.gen{width:42px;height:42px;flex:0 0 42px;border-radius:12px;display:grid;place-items:center;background:var(--brass);color:#14161A;transition:.12s}
+.gen:hover{background:var(--brass-bright);transform:translateY(-1px)}.gen:disabled{opacity:.4;cursor:default;transform:none}
+.gen svg{width:19px;height:19px}
+.gen.busy{background:var(--panel-3);color:var(--text)}
+.hint{font-size:11px;color:var(--text-faint);text-align:center;margin-top:8px}
+.hint b{color:var(--brass-bright)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:40;background:rgba(8,9,11,.92);display:none;flex-direction:column;padding:18px}
+.lb.on{display:flex}
+.lb img{flex:1;min-height:0;object-fit:contain;width:100%}
+.lb .lbar{display:flex;gap:8px;justify-content:center;padding-top:14px;flex-wrap:wrap}
+.lb .lbar button{padding:9px 15px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:13px;display:inline-flex;gap:7px;align-items:center}
+.lb .lbar button:hover{border-color:var(--brass-line)}
+.lb .x{position:absolute;top:16px;right:18px;width:38px;height:38px;border-radius:9px;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;color:var(--text)}
+
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--panel-3);border:1px solid var(--line);border-radius:10px;padding:10px 15px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:60}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:620px){.feed{columns:2 150px}.ctrl label{display:none}.hide-sm{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="mark"></div>
+  <div class="ttl brand">QUALIDADE <b>V1</b><span>Imagens</span></div>
+  <div class="right">
+    <button class="gbtn" id="clearFeed"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg><span class="hide-sm">Limpar feed</span></button>
+  </div>
+</header>
+
+<div class="feed-wrap" id="feedWrap">
+  <div class="feed" id="feed"></div>
+</div>
+
+<div class="dock">
+  <div class="dock-inner">
+    <div class="controls">
+      <div class="ctrl"><label>Estilo</label>
+        <select id="cStyle">
+          <option value="realista">Realista</option>
+          <option value="cinema">Cinematográfico</option>
+          <option value="retrato">Retrato</option>
+          <option value="produto">Produto</option>
+          <option value="paisagem">Paisagem</option>
+          <option value="arte">Arte digital</option>
+          <option value="livre">Livre (sem estilo)</option>
+        </select>
+      </div>
+      <div class="ctrl"><label>Proporção</label>
+        <select id="cAspect">
+          <option value="16:9">16:9</option>
+          <option value="1:1">1:1</option>
+          <option value="9:16">9:16</option>
+          <option value="3:2">3:2</option>
+        </select>
+      </div>
+      <div class="ctrl"><label>Qualidade</label>
+        <select id="cQual">
+          <option value="1080">1080p</option>
+          <option value="2k">2K</option>
+          <option value="4k">4K (lento)</option>
+          <option value="8k">8K (experimental)</option>
+        </select>
+      </div>
+      <div class="ctrl"><label>Quantidade</label>
+        <select id="cQty"><option>1</option><option>2</option><option>4</option></select>
+      </div>
+      <div class="toggle on" id="enhanceTg"><div class="sw"></div>Aprimorar prompt com IA</div>
+    </div>
+    <div class="input-row">
+      <textarea id="prompt" rows="1" placeholder="Descreva a imagem… ex.: escavadeira hidráulica amarela numa obra ao amanhecer"></textarea>
+      <button class="gen" id="genBtn" aria-label="Gerar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3v4M3 5h4M6 17v4M4 19h4M13 3l2.5 6.5L22 12l-6.5 2.5L13 21l-2.5-6.5L4 12l6.5-2.5z"/></svg>
+      </button>
+    </div>
+    <div class="hint">Realismo no tier grátis tem teto · <b>4K/8K</b> pode demorar ou cair pra 2K se falhar</div>
+  </div>
+</div>
+
+<!-- lightbox -->
+<div class="lb" id="lb">
+  <button class="x" id="lbX"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <img id="lbImg" alt="">
+  <div class="lbar">
+    <button id="lbDl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>Baixar</button>
+    <button id="lbCopy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copiar prompt</button>
+    <button id="lbRedo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>Variar</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const LS={k1:'iia_v7_openrouter',k2:'iia_v7_groq',feed:'qv1_img_feed'};
+const getK1=()=>localStorage.getItem(LS.k1)||'';
+const getK2=()=>localStorage.getItem(LS.k2)||'';
+const MODEL_MAIN=(()=>{try{return JSON.parse(localStorage.getItem('iia_v7_settings')||'{}').modelMain||'openai/gpt-4o-mini'}catch{return 'openai/gpt-4o-mini'}})();
+
+/* presets de estilo (modificadores de prompt) */
+const STYLES={
+  realista:'fotografia realista, ultra detalhada, foco nítido, iluminação natural, lente 50mm, proporções corretas, sem distorções',
+  cinema:'still cinematográfico, iluminação dramática, gradação de cor, profundidade de campo, 35mm, alta fidelidade',
+  retrato:'retrato profissional, pele detalhada e natural, bokeh suave, iluminação de estúdio, 85mm, anatomia correta',
+  produto:'foto de produto comercial, fundo limpo, iluminação de estúdio, altíssima nitidez, detalhes precisos',
+  paisagem:'paisagem ampla, hora dourada, grande angular, alto alcance dinâmico, muito detalhada',
+  arte:'arte digital detalhada, composição forte, alta qualidade',
+  livre:''
+};
+const QUALITY_SUFFIX='alta resolução, alta fidelidade, sem deformações';
+
+/* qualidade -> aresta longa (px) */
+const LONG={'1080':1920,'2k':2560,'4k':3840,'8k':7680};
+const SAFE_FALLBACK=2560; // se 4k/8k falhar
+function dims(aspect,qual){
+  const L=LONG[qual]||1920;
+  const map={'16:9':[L,Math.round(L*9/16)],'1:1':[L,L],'9:16':[Math.round(L*9/16),L],'3:2':[L,Math.round(L*2/3)]};
+  return map[aspect]||[L,Math.round(L*9/16)];
+}
+
+/* estado do feed */
+let feed=[];try{feed=JSON.parse(localStorage.getItem(LS.feed)||'[]')}catch{feed=[]}
+function persist(){localStorage.setItem(LS.feed,JSON.stringify(feed.slice(0,60)))}
+
+/* aprimorar prompt via IA (opcional) */
+let enhance=true;
+$('#enhanceTg').addEventListener('click',()=>{enhance=!enhance;$('#enhanceTg').classList.toggle('on',enhance)});
+async function enhancePrompt(base){
+  if(!enhance||(!getK1()&&!getK2()))return base;
+  try{
+    const attempts=[
+      {url:'https://openrouter.ai/api/v1/chat/completions',key:getK1(),model:MODEL_MAIN,extra:{'HTTP-Referer':location.origin,'X-Title':'QUALIDADE V1'}},
+      {url:'https://api.groq.com/openai/v1/chat/completions',key:getK2(),model:'llama-3.3-70b-versatile',extra:{}}
+    ];
+    for(const a of attempts){
+      if(!a.key)continue;
+      const r=await fetch(a.url,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+a.key,...a.extra},
+        body:JSON.stringify({model:a.model,temperature:.6,messages:[
+          {role:'system',content:'Você expande descrições curtas em prompts ricos para gerar imagens fotorrealistas. Responda só com o prompt final em inglês, uma linha, sem aspas, sem explicação. Inclua detalhes de luz, lente, textura e composição, mantendo fiel ao pedido.'},
+          {role:'user',content:base}]})});
+      if(!r.ok)continue;
+      const j=await r.json();const t=(j.choices?.[0]?.message?.content||'').trim().replace(/^["']|["']$/g,'');
+      if(t)return t;
+    }
+  }catch{}
+  return base;
+}
+
+/* gerar */
+let busy=false;
+async function generate(redoFrom){
+  const raw=(redoFrom?redoFrom.base:$('#prompt').value).trim();
+  if(!raw||busy)return;
+  busy=true;setGen(true);
+
+  const style=redoFrom?redoFrom.style:$('#cStyle').value;
+  const aspect=redoFrom?redoFrom.aspect:$('#cAspect').value;
+  const qual=redoFrom?redoFrom.qual:$('#cQual').value;
+  const qty=redoFrom?1:(+$('#cQty').value||1);
+
+  let core=raw;
+  if(!redoFrom){ core=await enhancePrompt(raw); }   // aprimora 1x e reusa nas variações
+  const mods=[core,STYLES[style],QUALITY_SUFFIX].filter(Boolean).join(', ');
+
+  for(let i=0;i<qty;i++){
+    const seed=Math.floor(Math.random()*1e9);
+    const [w,h]=dims(aspect,qual);
+    const item={id:'i'+Date.now()+'_'+i,base:raw,full:mods,style,aspect,qual,seed,w,h,url:null,ts:Date.now(),loading:true};
+    feed.unshift(item);renderFeed();
+    loadImage(item,w,h);
+  }
+  if(!redoFrom)$('#prompt').value='',autosize();
+  busy=false;setGen(false);
+}
+function buildURL(full,w,h,seed){
+  return `https://image.pollinations.ai/prompt/${encodeURIComponent(full.slice(0,1000))}?width=${w}&height=${h}&nologo=true&model=flux&enhance=false&seed=${seed}`;
+}
+function loadImage(item,w,h,triedFallback){
+  const url=buildURL(item.full,w,h,item.seed);
+  const im=new Image();
+  im.onload=()=>{item.url=url;item.w=w;item.h=h;item.loading=false;persist();renderFeed();};
+  im.onerror=()=>{
+    if(!triedFallback&&(w>SAFE_FALLBACK||h>SAFE_FALLBACK)){
+      toast('Resolução alta falhou — caindo pra 2K.');
+      const r=w>=h?[SAFE_FALLBACK,Math.round(SAFE_FALLBACK*h/w)]:[Math.round(SAFE_FALLBACK*w/h),SAFE_FALLBACK];
+      loadImage(item,r[0],r[1],true);
+    }else{item.loading=false;item.error=true;persist();renderFeed();}
+  };
+  im.src=url;
+}
+function setGen(b){const g=$('#genBtn');g.classList.toggle('busy',b);g.disabled=b;}
+
+/* render feed */
+function renderFeed(){
+  const f=$('#feed');
+  if(!feed.length){$('#feedWrap').innerHTML='<div class="empty"><div class="inner"><div class="big"></div><h1 class="brand">Estúdio de imagens</h1><p>Descreva algo lá embaixo. Escolha estilo realista, proporção e qualidade — a IA pode aprimorar seu prompt antes de gerar.</p></div></div>';return;}
+  if(!$('#feed')){$('#feedWrap').innerHTML='<div class="feed" id="feed"></div>';}
+  const feedEl=$('#feed');feedEl.innerHTML='';
+  feed.forEach(it=>{
+    const c=document.createElement('div');c.className='card';
+    const body=it.error
+      ? `<div class="ph">Falhou ao gerar.<br>Tente reformular.</div>`
+      : it.loading
+        ? `<div class="ph"><div class="ring"></div>gerando ${it.qual.toUpperCase()}…</div>`
+        : `<img src="${it.url}" alt="" loading="lazy">`;
+    c.innerHTML=`${body}
+      <div class="meta"><div class="pr">${esc(it.base)}</div><div class="tags">${it.style} · ${it.aspect} · ${it.w}×${it.h}</div></div>
+      <div class="bar">
+        <button data-act="dl" title="Baixar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></button>
+        <button data-act="redo" title="Variar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+        <button data-act="copy" title="Copiar prompt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
+        <button data-act="del" class="del" title="Excluir"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></button>
+      </div>`;
+    const img=c.querySelector('img');if(img)img.addEventListener('click',()=>openLB(it));
+    c.querySelectorAll('[data-act]').forEach(b=>b.addEventListener('click',()=>cardAct(b.dataset.act,it)));
+    feedEl.appendChild(c);
+  });
+}
+function cardAct(act,it){
+  if(act==='dl')download(it);
+  else if(act==='copy'){navigator.clipboard.writeText(it.full);toast('Prompt copiado.');}
+  else if(act==='del'){feed=feed.filter(x=>x.id!==it.id);persist();renderFeed();}
+  else if(act==='redo'){generate(it);}
+}
+async function download(it){
+  if(!it.url)return;
+  try{const r=await fetch(it.url);const b=await r.blob();const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='qualidade-v1-'+it.seed+'.png';a.click();toast('Baixando…');}
+  catch{window.open(it.url,'_blank');}
+}
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+/* lightbox */
+let lbItem=null;
+function openLB(it){lbItem=it;$('#lbImg').src=it.url;$('#lb').classList.add('on');}
+$('#lbX').addEventListener('click',()=>$('#lb').classList.remove('on'));
+$('#lb').addEventListener('click',e=>{if(e.target.id==='lb')$('#lb').classList.remove('on')});
+$('#lbDl').addEventListener('click',()=>lbItem&&download(lbItem));
+$('#lbCopy').addEventListener('click',()=>{if(lbItem){navigator.clipboard.writeText(lbItem.full);toast('Prompt copiado.')}});
+$('#lbRedo').addEventListener('click',()=>{if(lbItem){$('#lb').classList.remove('on');generate(lbItem)}});
+
+/* composer */
+function autosize(){const i=$('#prompt');i.style.height='auto';i.style.height=Math.min(i.scrollHeight,140)+'px'}
+$('#prompt').addEventListener('input',autosize);
+$('#prompt').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();generate()}});
+$('#genBtn').addEventListener('click',()=>generate());
+$('#clearFeed').addEventListener('click',()=>{if(feed.length&&confirm('Limpar todo o feed?')){feed=[];persist();renderFeed()}});
+
+let tt;function toast(m){const e=$('#toast');e.textContent=m;e.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>e.classList.remove('show'),2400)}
+
+renderFeed();autosize();
+</script>
+</body>
+</html>

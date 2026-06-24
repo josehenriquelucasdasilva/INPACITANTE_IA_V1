@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14161A">
+<title>QUALIDADE V1 · Comparar geradores</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#14161A;--panel:#1B1E24;--panel-2:#22262E;--panel-3:#272C35;--line:#2C313B;--line-soft:#22262E;
+  --text:#E9E7E2;--text-dim:#9AA0AB;--text-faint:#6B7280;
+  --brass:#C9952E;--brass-bright:#E3B45A;--brass-soft:rgba(201,149,46,.12);--brass-line:rgba(201,149,46,.35);
+  --ok:#5FB98E;--danger:#E5645B;--r-sm:8px;--r-md:12px;--r-lg:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:"Inter",system-ui,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,textarea{font-family:inherit;color:inherit}button{cursor:pointer;border:none;background:none}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:6px}
+.brand{font-family:"Space Grotesk",sans-serif;font-weight:600}
+*::-webkit-scrollbar{width:9px;height:9px}*::-webkit-scrollbar-thumb{background:var(--line);border-radius:20px;border:2px solid transparent;background-clip:padding-box}
+
+.top{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:11px;padding:13px 18px;border-bottom:1px solid var(--line);background:rgba(20,22,26,.85);backdrop-filter:blur(10px)}
+.mark{width:26px;height:26px;border-radius:7px;background:linear-gradient(140deg,var(--brass-bright),var(--brass));position:relative;flex:0 0 26px}
+.mark::after{content:"";position:absolute;inset:7px;border:2px solid #14161A;border-right-color:transparent;border-bottom-color:transparent;transform:rotate(45deg);border-radius:3px}
+.top .ttl{font-size:14.5px}.top .ttl b{color:var(--brass-bright)}
+.top .ttl span{display:block;font-size:10px;letter-spacing:.15em;color:var(--text-faint);text-transform:uppercase;margin-top:2px}
+
+.wrap{max-width:1280px;margin:0 auto;padding:20px 18px 60px}
+.note{background:var(--brass-soft);border:1px solid var(--brass-line);border-radius:var(--r-md);padding:13px 15px;font-size:13px;color:var(--text);margin-bottom:18px}
+.note b{color:var(--brass-bright)}
+
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-md);padding:16px;margin-bottom:18px}
+.panel h3{font-family:"Space Grotesk";font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:12px}
+
+.keyrow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.keyrow input{flex:1;min-width:200px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;font-size:13px;outline:none}
+.keyrow input:focus{border-color:var(--brass-line)}
+.keyrow .save{padding:10px 16px;border-radius:var(--r-sm);background:var(--brass);color:#14161A;font-weight:600;font-size:13px}
+.keyrow .hint{flex-basis:100%;font-size:12px;color:var(--text-faint);margin-top:2px}
+.keyrow .hint a{color:var(--brass-bright);text-decoration:none}
+
+.models{display:flex;flex-wrap:wrap;gap:9px}
+.mchip{display:flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid var(--line);border-radius:30px;background:var(--panel-2);cursor:pointer;font-size:13px;transition:.15s;user-select:none}
+.mchip:hover{border-color:var(--brass-line)}
+.mchip.on{border-color:var(--brass);background:var(--brass-soft)}
+.mchip.locked{opacity:.45;cursor:not-allowed}
+.mchip .box{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line);display:grid;place-items:center;flex:0 0 16px}
+.mchip.on .box{background:var(--brass);border-color:var(--brass)}
+.mchip.on .box::after{content:"";width:8px;height:5px;border:2px solid #14161A;border-top:none;border-right:none;transform:rotate(-45deg) translateY(-1px)}
+.mchip small{color:var(--text-faint);font-size:11px}
+.mchip .lk{font-size:10px;color:var(--brass-bright)}
+
+.run{margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.run .go{padding:11px 20px;border-radius:var(--r-sm);background:var(--brass);color:#14161A;font-weight:600;font-size:14px}
+.run .go:disabled{opacity:.4;cursor:default}
+.run .go.busy{background:var(--panel-3);color:var(--text)}
+.run .meta{font-size:12px;color:var(--text-faint)}
+
+.prompts{display:grid;gap:10px}
+.prompts .p{background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px}
+.prompts .p .lab{font-family:"Space Grotesk";font-size:11px;color:var(--brass-bright);font-weight:600;margin-bottom:6px}
+.prompts textarea{width:100%;background:transparent;border:none;resize:vertical;outline:none;font-size:12.5px;color:var(--text-dim);line-height:1.45;min-height:46px}
+
+/* grade de resultados */
+.grid{overflow-x:auto;margin-top:6px}
+table{border-collapse:separate;border-spacing:10px}
+th{font-size:11px;color:var(--text-dim);font-weight:600;text-align:center;vertical-align:bottom;padding-bottom:4px;min-width:180px}
+th .strong{display:block;font-size:10px;color:var(--text-faint);font-weight:400;margin-top:2px}
+td.rowlab{font-size:11px;color:var(--brass-bright);font-family:"Space Grotesk";writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;width:22px;white-space:nowrap}
+.cell{width:180px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--panel);overflow:hidden}
+.cell .imgs{display:grid;grid-template-columns:1fr 1fr;gap:2px;aspect-ratio:2/1;background:var(--panel-2)}
+.cell .imgs .slot{position:relative;overflow:hidden;display:grid;place-items:center}
+.cell .imgs img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;display:block}
+.cell .imgs .ld{font-size:10px;color:var(--text-faint)}
+.cell .imgs .ring{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--brass);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cell .stat{display:flex;justify-content:space-between;align-items:center;padding:6px 9px;font-size:11px;color:var(--text-faint);border-top:1px solid var(--line-soft)}
+.cell .stat .ms{font-family:"Space Grotesk";color:var(--text-dim)}
+.cell .score{display:flex;align-items:center;gap:7px;padding:7px 9px;border-top:1px solid var(--line-soft)}
+.cell .score label{font-size:10px;color:var(--text-faint)}
+.cell .score input{width:46px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-size:12px;text-align:center;outline:none}
+.cell .score input:focus{border-color:var(--brass-line)}
+
+/* tabela referência */
+.ref{margin-top:8px;width:100%;border-spacing:0}
+.ref table{width:100%}
+.reftbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.reftbl th,.reftbl td{padding:9px 11px;border-bottom:1px solid var(--line-soft);text-align:center}
+.reftbl th{color:var(--text-dim);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.reftbl td:first-child,.reftbl th:first-child{text-align:left}
+.reftbl .nm{font-weight:600;color:var(--text)}
+.reftbl .nm small{display:block;font-weight:400;color:var(--text-faint);font-size:10.5px}
+.sc{font-family:"Space Grotesk";font-weight:600}
+.sc.hi{color:var(--ok)}.sc.mid{color:var(--brass-bright)}.sc.lo{color:var(--text-faint)}
+
+.lb{position:fixed;inset:0;z-index:40;background:rgba(8,9,11,.93);display:none;place-items:center;padding:24px}
+.lb.on{display:grid}.lb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.lb .x{position:absolute;top:16px;right:18px;width:38px;height:38px;border-radius:9px;background:var(--panel);border:1px solid var(--line);display:grid;place-items:center;color:var(--text)}
+
+.foot{font-size:12px;color:var(--text-faint);margin-top:8px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="mark"></div>
+  <div class="ttl brand">QUALIDADE <b>V1</b><span>Comparar geradores</span></div>
+</header>
+
+<div class="wrap">
+  <div class="note">
+    <b>Por que este teste é honesto:</b> a IA não consegue "olhar" as imagens e dar nota sozinha. Aqui <b>você</b> roda os mesmos prompts em cada modelo, vê lado a lado, e pontua com os próprios olhos. O tempo de resposta é medido de verdade no seu navegador. As duas imagens por célula servem pra checar <b>consistência</b> (mesmo prompt, seeds diferentes).
+  </div>
+
+  <div class="panel">
+    <h3>1 · Chave Pollinations (grátis, segura no frontend)</h3>
+    <div class="keyrow">
+      <input id="pk" type="password" placeholder="pk_… (chave publicável)">
+      <button class="save" id="savePk">Salvar</button>
+      <div class="hint">Sem chave, só <b>FLUX</b> e <b>Z-Image</b> funcionam (rota keyless). Seedream, Nano Banana e GPT Image precisam da chave <b>pk_</b> grátis em <a href="https://enter.pollinations.ai" target="_blank" rel="noopener">enter.pollinations.ai</a>. Use a publicável (pk_), nunca a secreta (sk_).</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>2 · Modelos a comparar</h3>
+    <div class="models" id="models"></div>
+  </div>
+
+  <div class="panel">
+    <h3>3 · Prompts de teste</h3>
+    <div class="prompts" id="prompts"></div>
+    <div class="run">
+      <button class="go" id="run">Rodar comparação</button>
+      <span class="meta" id="runMeta"></span>
+    </div>
+  </div>
+
+  <div class="grid"><div id="results"></div></div>
+
+  <div class="panel" style="margin-top:18px">
+    <h3>Referência — estimativa fundamentada (jun/2026), não teste cego</h3>
+    <table class="reftbl">
+      <thead><tr>
+        <th>Modelo</th><th>Realismo</th><th>Fidelidade</th><th>Coerência</th><th>Consistência</th><th>Velocidade</th><th>Integração*</th>
+      </tr></thead>
+      <tbody id="refBody"></tbody>
+    </table>
+    <div class="foot">* Integração = facilidade de chamar do seu site estático (10 = trivial, sem backend). Notas de qualidade baseadas em benchmarks e documentação pública de jun/2026; <b>a verdade do seu caso é o que você pontuar acima.</b> Velocidade depende da carga do servidor grátis no momento.</div>
+  </div>
+</div>
+
+<div class="lb" id="lb"><button class="x" id="lbx">✕</button><img id="lbimg" alt=""></div>
+
+<script src="image-engine.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const KEYLESS_OK=['pollinations:flux','pollinations:zimage'];
+const COMPARE=['pollinations:flux','pollinations:seedream','pollinations:nanobanana','pollinations:gptimage','pollinations:zimage'];
+
+/* notas de referência (estimativa fundamentada) — 0..10 */
+const REF={
+  'pollinations:flux':       {realismo:9,fidelidade:8,coerencia:8,consistencia:7,velocidade:7,integr:10},
+  'pollinations:seedream':   {realismo:8,fidelidade:9,coerencia:9,consistencia:9,velocidade:7,integr:9},
+  'pollinations:nanobanana': {realismo:8,fidelidade:8,coerencia:9,consistencia:8,velocidade:8,integr:9},
+  'pollinations:gptimage':   {realismo:7,fidelidade:9,coerencia:8,consistencia:7,velocidade:5,integr:9},
+  'pollinations:zimage':     {realismo:7,fidelidade:7,coerencia:7,consistencia:7,velocidade:8,integr:10}
+};
+
+const PROMPTS=[
+  {id:'A',txt:'Uma fotografia ultra realista de um leão macho adulto em uma savana africana ao pôr do sol, grama seca dourada, poeira no ar, profundidade de campo natural, anatomia correta, sem estilo de pintura, sem arte digital, aparência de fotografia profissional de vida selvagem.'},
+  {id:'B',txt:'Retrato fotográfico realista de um guerreiro viking nórdico, barba ruiva, armadura de couro escura, iluminação cinematográfica fria, textura realista de pele, olhos naturais, fundo de floresta nevoenta, sem estética de desenho, sem exagero fantasy.'},
+  {id:'C',txt:'Uma cozinha moderna minimalista branca com bancada de mármore e luz natural entrando pela janela, foto imobiliária profissional, linhas retas, proporções corretas, sem objetos distorcidos.'}
+];
+
+let selected=new Set(['pollinations:flux','pollinations:seedream','pollinations:nanobanana']);
+
+/* chave */
+$('#pk').value=localStorage.getItem('qv1_pollinations_pk')||'';
+$('#savePk').addEventListener('click',()=>{const v=$('#pk').value.trim();if(v)localStorage.setItem('qv1_pollinations_pk',v);else localStorage.removeItem('qv1_pollinations_pk');renderModels();});
+
+/* render modelos */
+function hasKey(){return !!(localStorage.getItem('qv1_pollinations_pk')||'')}
+function renderModels(){
+  const box=$('#models');box.innerHTML='';
+  COMPARE.forEach(id=>{
+    const c=ImageEngine.CATALOG[id];
+    const locked=!hasKey()&&!KEYLESS_OK.includes(id);
+    const chip=document.createElement('div');
+    chip.className='mchip'+(selected.has(id)&&!locked?' on':'')+(locked?' locked':'');
+    chip.innerHTML=`<div class="box"></div><div>${c.nome}<br><small>${c.forte}</small></div>${locked?'<span class="lk">🔒 pk_</span>':''}`;
+    if(!locked)chip.addEventListener('click',()=>{selected.has(id)?selected.delete(id):selected.add(id);renderModels();});
+    box.appendChild(chip);
+  });
+}
+
+/* render prompts */
+function renderPrompts(){
+  const box=$('#prompts');box.innerHTML='';
+  PROMPTS.forEach(p=>{
+    const d=document.createElement('div');d.className='p';
+    d.innerHTML=`<div class="lab">PROMPT ${p.id}</div><textarea data-id="${p.id}">${p.txt}</textarea>`;
+    box.appendChild(d);
+  });
+}
+
+/* referência */
+function renderRef(){
+  const tb=$('#refBody');tb.innerHTML='';
+  COMPARE.forEach(id=>{
+    const c=ImageEngine.CATALOG[id],r=REF[id];
+    const cls=v=>v>=8.5?'hi':v>=7?'mid':'lo';
+    tb.innerHTML+=`<tr><td class="nm">${c.nome}<small>${c.forte}</small></td>
+      <td class="sc ${cls(r.realismo)}">${r.realismo}</td>
+      <td class="sc ${cls(r.fidelidade)}">${r.fidelidade}</td>
+      <td class="sc ${cls(r.coerencia)}">${r.coerencia}</td>
+      <td class="sc ${cls(r.consistencia)}">${r.consistencia}</td>
+      <td class="sc ${cls(r.velocidade)}">${r.velocidade}</td>
+      <td class="sc ${cls(r.integr)}">${r.integr}</td></tr>`;
+  });
+}
+
+/* rodar comparação */
+let running=false;
+$('#run').addEventListener('click',runCompare);
+async function runCompare(){
+  if(running)return;
+  const models=COMPARE.filter(id=>selected.has(id)&&(hasKey()||KEYLESS_OK.includes(id)));
+  if(!models.length){alert('Selecione ao menos um modelo.');return;}
+  const prompts=PROMPTS.map(p=>({id:p.id,txt:$(`textarea[data-id="${p.id}"]`).value.trim()}));
+  running=true;$('#run').classList.add('busy');$('#run').textContent='Rodando…';$('#run').disabled=true;
+
+  // monta a tabela vazia
+  const res=$('#results');
+  let html='<table><thead><tr><th></th>';
+  models.forEach(id=>{const c=ImageEngine.CATALOG[id];html+=`<th>${c.nome}<span class="strong">${c.forte}</span></th>`;});
+  html+='</tr></thead><tbody>';
+  prompts.forEach(p=>{
+    html+=`<tr><td class="rowlab">PROMPT ${p.id}</td>`;
+    models.forEach(id=>{
+      html+=`<td><div class="cell" id="cell_${p.id}_${cssid(id)}">
+        <div class="imgs"><div class="slot" data-s="0"><div class="ring"></div></div><div class="slot" data-s="1"><div class="ring"></div></div></div>
+        <div class="stat"><span>2 gerações</span><span class="ms" id="ms_${p.id}_${cssid(id)}">…</span></div>
+        <div class="score"><label>sua nota</label><input type="number" min="0" max="10" step="0.5" placeholder="0-10"></div>
+      </div></td>`;
+    });
+    html+='</tr>';
+  });
+  html+='</tbody></table>';
+  res.innerHTML=html;
+
+  // dispara todas as gerações (2 por célula)
+  const opts={width:1024,height:1024,nologo:true};
+  const jobs=[];
+  prompts.forEach(p=>{
+    models.forEach(id=>{
+      [0,1].forEach(si=>{
+        jobs.push((async()=>{
+          const cell=$(`#cell_${p.id}_${cssid(id)}`);
+          const slot=cell.querySelector(`.slot[data-s="${si}"]`);
+          try{
+            const out=await ImageEngine.generateImage(p.txt,{...opts,seed:Math.floor(Math.random()*2e9)},id);
+            slot.innerHTML=`<img src="${out.url}" alt="">`;
+            slot.querySelector('img').addEventListener('click',()=>openLB(out.url));
+            const msEl=$(`#ms_${p.id}_${cssid(id)}`);
+            const prev=msEl.dataset.v?+msEl.dataset.v:null;
+            const avg=prev?Math.round((prev+out.meta.ms)/2):out.meta.ms;
+            msEl.dataset.v=avg;msEl.textContent=(avg/1000).toFixed(1)+'s';
+          }catch(e){slot.innerHTML='<div class="ld">falhou</div>';}
+        })());
+      });
+    });
+  });
+  await Promise.allSettled(jobs);
+
+  running=false;$('#run').classList.remove('busy');$('#run').textContent='Rodar de novo';$('#run').disabled=false;
+  $('#runMeta').textContent='Tempo medido por geração. Pontue cada célula e compare com a referência abaixo.';
+}
+const cssid=s=>s.replace(/[^a-z0-9]/gi,'_');
+
+/* lightbox */
+function openLB(u){$('#lbimg').src=u;$('#lb').classList.add('on');}
+$('#lbx').addEventListener('click',()=>$('#lb').classList.remove('on'));
+$('#lb').addEventListener('click',e=>{if(e.target.id==='lb')$('#lb').classList.remove('on')});
+
+renderModels();renderPrompts();renderRef();
+</script>
+</body>
+</html>
