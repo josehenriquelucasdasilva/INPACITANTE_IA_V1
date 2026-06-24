@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Entidades · QUALIDADE V1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;450;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#13151a;--panel:#181b21;--panel-2:#1e222a;--line:#272c35;--brass-line:#3a3a30;
+  --text:#e8e6e1;--text-dim:#a8a59c;--text-faint:#6f6c64;--brass:#c9a86a;--brass-bright:#e0c486;--brass-soft:rgba(201,168,106,.12);
+  --ok:#5fb98e;--ok-soft:rgba(95,185,142,.13);--amber:#d8a657;--danger:#d77a6a;--radius:13px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:"Inter",sans-serif;min-height:100vh;font-size:14.5px;line-height:1.55}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 80px}
+.top{position:sticky;top:0;z-index:20;background:rgba(19,21,26,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:13px 16px}
+.top .home{display:flex;align-items:center;gap:7px;color:var(--text-dim);font-size:13px}.top .home svg{width:18px;height:18px}
+.top h1{font-family:"Space Grotesk";font-size:17px;font-weight:600}.top .sp{flex:1}
+.cloudstat{font-size:11px;padding:5px 10px;border-radius:20px;background:var(--panel-2);border:1px solid var(--line);color:var(--text-faint);font-family:"Space Grotesk"}
+.cloudstat.on{color:var(--ok);border-color:rgba(95,185,142,.3);background:var(--ok-soft)}
+.kbtn{display:flex;align-items:center;gap:6px;background:var(--panel-2);border:1px solid var(--line);color:var(--text-dim);border-radius:9px;padding:7px 11px;font-size:12.5px;font-family:"Space Grotesk";cursor:pointer}
+.kbtn:hover{border-color:var(--brass-line);color:var(--text)}.kbtn svg{width:14px;height:14px}
+.banner{margin:18px 0;padding:18px;border:1px dashed var(--brass-line);border-radius:var(--radius);background:var(--brass-soft);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.banner p{flex:1;min-width:200px;color:var(--text-dim);font-size:13px}.banner b{color:var(--brass-bright)}
+.bar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:20px 0 10px}
+.bp,.bg{font-family:"Space Grotesk";font-size:13px;font-weight:500;padding:9px 15px;border-radius:9px;cursor:pointer;border:1px solid}
+.bp{background:var(--brass);color:#1a1712;border-color:var(--brass)}.bp:hover{background:var(--brass-bright)}
+.bg{background:transparent;color:var(--text-dim);border-color:var(--line)}.bg:hover{color:var(--text);border-color:var(--brass-line)}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin:6px 0}
+.chip{font-size:12px;font-family:"Space Grotesk";padding:5px 11px;border-radius:20px;border:1px solid var(--line);background:var(--panel);color:var(--text-dim);cursor:pointer}
+.chip.on{border-color:var(--brass);color:var(--brass-bright);background:var(--brass-soft)}
+.list{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.empty{padding:34px;text-align:center;color:var(--text-faint);font-size:13px;border:1px dashed var(--line);border-radius:var(--radius)}
+.ent{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px;cursor:pointer;transition:.13s}
+.ent:hover{border-color:var(--brass-line);background:var(--panel-2)}
+.ent .h{display:flex;align-items:center;gap:9px}
+.ent .nm{font-weight:600;font-size:15px}
+.ent .ty{font-size:10px;font-family:"Space Grotesk";text-transform:uppercase;letter-spacing:.05em;color:var(--brass);background:var(--brass-soft);padding:2px 8px;border-radius:20px}
+.ent .auto{font-size:10px;color:var(--text-faint);border:1px solid var(--line);padding:2px 7px;border-radius:20px}
+.ent .sm{font-size:13px;color:var(--text-dim);margin-top:6px;line-height:1.5}
+.ent .mt{font-size:11.5px;color:var(--text-faint);margin-top:8px;display:flex;gap:10px;flex-wrap:wrap}
+.tag{font-size:10px;padding:2px 7px;border-radius:6px;background:var(--panel-2);color:var(--text-dim);border:1px solid var(--line)}
+.ov{position:fixed;inset:0;z-index:60;background:rgba(8,9,12,.72);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:18px}
+.ov[hidden]{display:none}
+.card{background:var(--panel);border:1px solid var(--brass-line);border-radius:16px;width:100%;max-width:560px;max-height:88vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.card-h{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel)}
+.card-h h2{font-family:"Space Grotesk";font-size:17px;font-weight:600}
+.x{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:transparent;border:1px solid var(--line);color:var(--text-dim);cursor:pointer}.x svg{width:16px;height:16px}
+.card-b{padding:18px}
+.sec{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-faint);font-family:"Space Grotesk";margin:16px 0 7px}
+.full{font-size:13.5px;color:var(--text-dim);line-height:1.65;white-space:pre-wrap}
+.qbtn{display:block;width:100%;text-align:left;font-size:13px;color:var(--text);background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:8px 11px;margin-bottom:6px;cursor:pointer}
+.qbtn:hover{border-color:var(--brass);color:var(--brass-bright)}
+.lnk{display:block;font-size:13px;margin-bottom:5px}.lnk a{color:var(--brass-bright)}.lnk small{color:var(--text-faint)}
+.chkc{font-size:12.5px;color:var(--text-dim);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-bottom:6px;white-space:pre-wrap}
+.fld{margin-bottom:13px}.fld label{display:block;font-size:11.5px;color:var(--text-faint);margin-bottom:6px;font-family:"Space Grotesk"}
+.fld input,.fld textarea,.fld select{width:100%;background:var(--panel-2);border:1px solid var(--line);border-radius:9px;padding:10px 12px;color:var(--text);font-family:inherit;font-size:14px}
+.fld textarea{min-height:80px;resize:vertical}
+.acts2{display:flex;gap:9px;justify-content:flex-end;flex-wrap:wrap}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel-2);border:1px solid var(--brass-line);color:var(--text);padding:11px 18px;border-radius:10px;font-size:13px;opacity:0;transition:.25s;z-index:90;pointer-events:none;max-width:90vw}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.hint{font-size:11px;color:var(--text-faint);margin-top:6px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="top">
+  <a class="home" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Chat</a>
+  <h1>Entidades</h1>
+  <div class="sp"></div>
+  <a class="kbtn" href="biblioteca.html">Biblioteca</a>
+  <button class="kbtn" id="errBtn">Erros</button>
+  <span class="cloudstat" id="cloudStat">local</span>
+  <button class="kbtn" id="cloudBtn">Nuvem</button>
+</div>
+
+<div class="wrap">
+  <div class="banner" id="banner" hidden>
+    <p><b>Conecte à nuvem</b> para usar as Entidades. Elas organizam o conhecimento da sua Biblioteca e Memória por tema/pessoa.</p>
+    <button class="bp" id="bannerBtn">Conectar</button>
+  </div>
+  <div id="main" hidden>
+    <div class="bar">
+      <button class="bp" id="detectBtn">Detectar entidades da Biblioteca</button>
+      <button class="bg" id="newBtn">Nova entidade</button>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="list" id="list"></div>
+  </div>
+</div>
+
+<!-- detalhe -->
+<div class="ov" id="detOv" hidden><div class="card">
+  <div class="card-h"><h2 id="detName">Entidade</h2><button class="x" data-close="detOv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="card-b" id="detBody"></div>
+</div></div>
+
+<!-- editar -->
+<div class="ov" id="edOv" hidden><div class="card" style="max-width:460px">
+  <div class="card-h"><h2>Editar entidade</h2><button class="x" data-close="edOv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="card-b">
+    <div class="fld"><label>Nome</label><input id="edName"></div>
+    <div class="fld"><label>Tipo</label><select id="edType"></select></div>
+    <div class="fld"><label>Aliases (vírgula)</label><input id="edAliases"></div>
+    <div class="fld"><label>Tags (vírgula)</label><input id="edTags"></div>
+    <div class="fld"><label>Resumo curto</label><textarea id="edSummary"></textarea></div>
+    <div class="acts2"><button class="bg" data-close="edOv">Cancelar</button><button class="bp" id="edSave">Salvar</button></div>
+  </div>
+</div></div>
+
+<!-- conectar -->
+<div class="ov" id="sbOv" hidden><div class="card" style="max-width:430px">
+  <div class="card-h"><h2>Conectar à nuvem (Supabase)</h2><button class="x" data-close="sbOv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="card-b">
+    <div class="fld"><label>Project URL</label><input id="sbUrl" placeholder="https://xxxx.supabase.co"></div>
+    <div class="fld"><label>Chave anon</label><input id="sbAnon" type="password" placeholder="eyJ…"></div>
+    <div class="acts2" style="margin:0 0 16px"><button class="bg" id="sbSaveCfg">Salvar config</button></div>
+    <div class="fld"><label>Email</label><input id="sbEmail" type="email"></div>
+    <div class="fld"><label>Senha</label><input id="sbPwd" type="password"></div>
+    <div class="acts2"><button class="bg" id="sbUp">Criar conta</button><button class="bp" id="sbIn">Entrar</button></div>
+    <div id="sbMsg" style="font-size:11.5px;color:var(--text-faint);text-align:center;margin-top:12px;min-height:14px"></div>
+  </div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="errors.js"></script>
+<script src="entities.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>(s==null?'':String(s)).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+let connected=false, ents=[], cnt={docs:{},mems:{}}, filter='all';
+const TYPE={person:'Pessoa',topic:'Tema',concept:'Conceito',project:'Projeto',book:'Obra',area:'Área',event:'Evento',technology:'Tecnologia',custom:'Outro'};
+const FILTERS=[['all','Todos'],['person','Pessoas'],['topic','Temas'],['concept','Conceitos'],['project','Projetos'],['area','Áreas'],['event','Eventos'],['technology','Tecnologias']];
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),2800)}
+const mem=()=>{try{return JSON.parse(localStorage.getItem('qv1_memory')||'[]')}catch{return[]}};
+function memoriesFor(e){const names=[e.name,...(e.aliases||[])].map(n=>(n||'').toLowerCase());return mem().filter(m=>names.some(n=>n&&m.toLowerCase().includes(n)))}
+
+/* conexão */
+function setConn(on,email){connected=on;$('#cloudStat').textContent=on?('☁ '+(email||'nuvem')):'local';$('#cloudStat').classList.toggle('on',on);$('#banner').hidden=on;$('#main').hidden=!on}
+async function autoConnect(){try{if(!Entities.isConfigured())return;const u=await Entities.user();if(u){setConn(true,u.email);await refresh()}}catch(e){}}
+function openSb(){$('#sbUrl').value=localStorage.getItem('qv1_sb_url')||'';$('#sbAnon').value=localStorage.getItem('qv1_sb_anon')||'';$('#sbMsg').textContent='';$('#sbOv').hidden=false}
+$('#cloudBtn').addEventListener('click',openSb);$('#bannerBtn').addEventListener('click',openSb);
+$('#errBtn').addEventListener('click',()=>{if(window.AppError)AppError.openPanel()});
+$('#sbSaveCfg').addEventListener('click',()=>{const u=$('#sbUrl').value.trim(),a=$('#sbAnon').value.trim();u?localStorage.setItem('qv1_sb_url',u):localStorage.removeItem('qv1_sb_url');a?localStorage.setItem('qv1_sb_anon',a):localStorage.removeItem('qv1_sb_anon');Entities.reset();toast('Config salva.')});
+async function sbAuth(mode){if(!Entities.isConfigured()){$('#sbMsg').textContent='Preencha URL e anon e salve.';return}const e=$('#sbEmail').value.trim(),p=$('#sbPwd').value;if(!e||!p){$('#sbMsg').textContent='Email e senha.';return}$('#sbMsg').textContent='Conectando…';
+  try{if(mode==='up'){await Entities.signUp(e,p);$('#sbMsg').textContent='Conta criada. Confirme o email se pedido, depois Entre.';return}await Entities.signIn(e,p);$('#sbOv').hidden=true;setConn(true,e);toast('Conectado.');await refresh()}catch(err){$('#sbMsg').textContent='Erro: '+(err.message||err)}}
+$('#sbIn').addEventListener('click',()=>sbAuth('in'));$('#sbUp').addEventListener('click',()=>sbAuth('up'));
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>{$('#'+b.dataset.close).hidden=true}));
+document.querySelectorAll('.ov').forEach(o=>o.addEventListener('click',e=>{if(e.target===o)o.hidden=true}));
+
+/* detectar a partir da biblioteca */
+$('#detectBtn').addEventListener('click',async()=>{
+  if(!connected)return;
+  let docs=[];try{docs=await Entities.processedDocs()}catch(e){toast('Erro: '+(e.message||e));return}
+  if(!docs.length){toast('Nenhum documento processado. Processe na Biblioteca primeiro.');return}
+  let n=0;
+  for(const d of docs){toast('Analisando '+(++n)+'/'+docs.length+'…');try{await Entities.extract(d.id)}catch(e){if(window.AppError)try{AppError.log({module:'entities',submodule:'extract',code:'ENTITY_EXTRACT_FAILED',error:e,related:{document_id:d.id},user_action:'detectar entidades da biblioteca'})}catch(_){}}}
+  toast('Detecção concluída.');await refresh();
+});
+
+/* nova entidade */
+$('#newBtn').addEventListener('click',()=>openEdit(null));
+
+/* filtros + lista */
+function renderFilters(){const box=$('#filters');box.innerHTML='';FILTERS.forEach(([k,lb])=>{const c=document.createElement('button');c.className='chip'+(filter===k?' on':'');c.textContent=lb;c.addEventListener('click',()=>{filter=k;renderFilters();renderList()});box.appendChild(c)})}
+async function refresh(){try{ents=await Entities.list();cnt=await Entities.counts()}catch(e){ents=[];toast('Erro: '+(e.message||e))}renderFilters();renderList()}
+function renderList(){
+  const box=$('#list');const arr=ents.filter(e=>filter==='all'||e.type===filter);
+  if(!arr.length){box.innerHTML='<div class="empty">'+(ents.length?'Nenhuma entidade neste filtro.':'Nenhuma entidade ainda. Clique em “Detectar entidades da Biblioteca”.')+'</div>';return}
+  box.innerHTML='';
+  arr.forEach(e=>{
+    const el=document.createElement('div');el.className='ent';
+    const tags=(e.tags||[]).map(t=>'<span class="tag">'+esc(t)+'</span>').join(' ');
+    el.innerHTML='<div class="h"><span class="nm">'+esc(e.name)+'</span><span class="ty">'+(TYPE[e.type]||e.type)+'</span>'+(e.auto_created?'<span class="auto">auto</span>':'')+'</div>'+
+      (e.summary?'<div class="sm">'+esc(e.summary)+'</div>':'<div class="sm" style="color:var(--text-faint)">Sem resumo. Abra e clique em “Consolidar”.</div>')+
+      '<div class="mt"><span>'+(cnt.docs[e.id]||0)+' docs</span><span>'+(cnt.mems[e.id]||0)+' memórias</span><span>importância '+(e.importance_score||0)+'</span>'+tags+'</div>';
+    el.addEventListener('click',()=>openDetail(e));
+    box.appendChild(el);
+  });
+}
+
+/* detalhe */
+async function openDetail(e){
+  $('#detName').textContent=e.name;
+  const body=$('#detBody');body.innerHTML='<div class="hint">Carregando…</div>';
+  $('#detOv').hidden=false;
+  let docs=[],chunks=[];try{docs=await Entities.docLinks(e.id)}catch(_){}try{chunks=await Entities.chunkLinks(e.id)}catch(_){}
+  const mems=memoriesFor(e);
+  let h='';
+  h+='<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><span class="ty">'+(TYPE[e.type]||e.type)+'</span>'+(e.auto_created?'<span class="auto">auto</span>':'')+'<span class="hint">importância '+(e.importance_score||0)+'</span></div>';
+  if(e.summary)h+='<div class="sec">Resumo</div><div class="full">'+esc(e.summary)+'</div>';
+  if(e.description)h+='<div class="sec">Resumo completo</div><div class="full">'+esc(e.description)+'</div>';
+  if(e.topics&&e.topics.length)h+='<div class="sec">Tópicos relacionados</div><div>'+e.topics.map(t=>'<span class="tag">'+esc(t)+'</span>').join(' ')+'</div>';
+  if(e.questions&&e.questions.length){h+='<div class="sec">Perguntas sugeridas</div>';e.questions.forEach(q=>{h+='<button class="qbtn" data-ask="'+esc(q)+'">'+esc(q)+'</button>'})}
+  h+='<div class="sec">Documentos ligados ('+docs.length+')</div>';
+  h+=docs.length?docs.map(d=>{const dd=d.library_documents||{};const m2=[dd.document_type,dd.theme,d.relation_type].filter(Boolean).join(' · ');return '<div class="lnk"><a href="biblioteca.html?doc='+encodeURIComponent(d.document_id)+'" target="_blank" rel="noopener">'+esc(dd.title||'documento')+'</a>'+(m2?' <small>'+esc(m2)+'</small>':'')+'</div>'}).join(''):'<div class="hint">Nenhum.</div>';
+  if(chunks.length){h+='<div class="sec">Trechos importantes</div>';chunks.slice(0,6).forEach(c=>{const cc=c.library_document_chunks||{};h+='<div class="chkc">'+esc((cc.content||'').slice(0,360))+((cc.content||'').length>360?'…':'')+'</div>'})}
+  h+='<div class="sec">Memórias relacionadas ('+mems.length+')</div>';
+  h+=mems.length?mems.map(m=>'<div class="chkc">• '+esc(m)+'</div>').join(''):'<div class="hint">Nenhuma memória casou com esta entidade.</div>';
+  h+='<div class="acts2" style="margin-top:18px"><button class="bg" data-act="edit">Editar</button><button class="bg" data-act="del">Excluir</button><button class="bg" data-act="consolidate">Consolidar resumo</button><button class="bp" data-act="chat">Usar no chat</button></div>';
+  body.innerHTML=h;
+  body.querySelectorAll('[data-ask]').forEach(b=>b.addEventListener('click',()=>{window.open('index.html?ask='+encodeURIComponent(b.dataset.ask),'_blank')}));
+  body.querySelector('[data-act="edit"]').addEventListener('click',()=>{$('#detOv').hidden=true;openEdit(e)});
+  body.querySelector('[data-act="del"]').addEventListener('click',async()=>{if(!confirm('Excluir entidade "'+e.name+'"?'))return;try{await Entities.remove(e.id);$('#detOv').hidden=true;toast('Excluída.');await refresh()}catch(err){toast('Erro: '+(err.message||err))}});
+  body.querySelector('[data-act="consolidate"]').addEventListener('click',async()=>{toast('Consolidando no servidor…');try{const r=await Entities.consolidate(e.id,mem());if(r&&r.entity){toast('Resumo consolidado.');await refresh();openDetail(r.entity)}}catch(err){if(window.AppError)try{AppError.log({module:'entities',submodule:'consolidate',code:'ENTITY_CONSOLIDATE_FAILED',error:err,user_action:'consolidar entidade '+e.name})}catch(_){}toast('Erro: '+(err.message||err))}});
+  body.querySelector('[data-act="chat"]').addEventListener('click',()=>{window.open('index.html?ask='+encodeURIComponent('Explique '+e.name+' com base na minha biblioteca.'),'_blank')});
+}
+
+/* editar / criar */
+let editId=null;
+function fillTypeSelect(sel,val){sel.innerHTML='';Object.entries(TYPE).forEach(([k,lb])=>{const o=document.createElement('option');o.value=k;o.textContent=lb;if(k===val)o.selected=true;sel.appendChild(o)})}
+function openEdit(e){editId=e?e.id:null;fillTypeSelect($('#edType'),e?e.type:'topic');
+  $('#edName').value=e?e.name:'';$('#edAliases').value=e?(e.aliases||[]).join(', '):'';$('#edTags').value=e?(e.tags||[]).join(', '):'';$('#edSummary').value=e?(e.summary||''):'';
+  $('#edOv').hidden=false}
+$('#edSave').addEventListener('click',async()=>{
+  const name=$('#edName').value.trim();if(!name){toast('Dê um nome.');return}
+  const patch={name,type:$('#edType').value,aliases:$('#edAliases').value.split(',').map(s=>s.trim()).filter(Boolean),tags:$('#edTags').value.split(',').map(s=>s.trim()).filter(Boolean),summary:$('#edSummary').value.trim()||null};
+  try{ if(editId){await Entities.update(editId,patch)}else{await Entities.create(patch)} $('#edOv').hidden=true;toast('Salvo.');await refresh() }catch(e){toast('Erro: '+(e.message||e))}
+});
+
+setConn(false);renderFilters();autoConnect();
+</script>
+</body>
+</html>
